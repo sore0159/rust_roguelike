@@ -1,0 +1,6 @@
+2016/08/23
+Initial git commit.  Working loosely from https://jaredonline.svbtle.com/roguelike-tutorial-table-of-contents
+
+This resource is 2 years out of date, so a lot of adjustments are needed.  This commit has tcod-rs display and input processing tested and working.  
+
+I am beginning to split the file structure apart and explore module scoping in Rust, along with some early exploration of Traits and how best to structure a multi-agent system.
