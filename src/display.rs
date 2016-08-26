@@ -1,10 +1,11 @@
-use tcod::console::{Root, FontLayout, Renderer};
-use tcod::{Console, BackgroundFlag};
+pub use tcod::console::{Root, FontLayout, Renderer};
+pub use tcod::{Console, BackgroundFlag};
 use geometry::{Point, Bound};
+use game::Game;
 
 
-const CON_W: i32 = 100;
-const CON_H: i32 = 50;
+pub const CON_W: i32 = 100;
+pub const CON_H: i32 = 50;
 
 pub fn init() -> Root {
     Root::initializer()
@@ -18,19 +19,29 @@ pub fn init() -> Root {
 pub trait ThingRender {
     fn get_location(&self) -> &Point;
     fn get_display(&self) -> Option<char>;
-    fn render<T: Console>(&self, screen: &mut Screen<T>) {
-        let c: char = match self.get_display() {
-            None => return,
-            Some(x) => x,
-        };
-        let loc = self.get_location();
-        if screen.bound.contains(loc) {
-            screen.console.put_char(loc.x, loc.y, c, BackgroundFlag::Set);
-        }
-    }
+    // fn render<T: Console>(&self, con: &mut Console, bound: &Bound) {
+    // fn render<'a, T: Console>(&self, screen: &'a mut Screen<'a, T>) {
+    // let c: char = match self.get_display() {
+    // None => return,
+    // Some(x) => x,
+    // };
+    // let loc = self.get_location();
+    // if screen.bound.contains(loc) {
+    // screen.console.put_char(loc.x, loc.y, c, BackgroundFlag::Set);
+    // if bound.contains(loc) {
+    // con.put_char(loc.x, loc.y, c, BackgroundFlag::Set);
+    // }
+    // }
+    //
 }
 
-pub struct Screen<'a, T: Console> {
+pub struct Screen<'a, T: 'a, Console> {
     pub bound: &'a Bound,
-    pub console: T,
+    pub console: &'a mut T,
+}
+
+impl<'a, T: 'a, Console> Screen<'a, T> {
+    pub fn render(&mut self, thing: ThingRender) {
+        //
+    }
 }

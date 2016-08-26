@@ -4,3 +4,10 @@ Initial git commit.  Working loosely from https://jaredonline.svbtle.com/rogueli
 This resource is 2 years out of date, so a lot of adjustments are needed.  This commit has tcod-rs display and input processing tested and working.  
 
 I am beginning to split the file structure apart and explore module scoping in Rust, along with some early exploration of Traits and how best to structure a multi-agent system.
+
+
+2016/08/25
+
+Worked out module namespacing issues.  All modules "use" implicitly starts at crate root, otherwise namespaces start at current module root.  Circular 'use' statements non-problematic.
+  
+Messing around with lifetimes and types: the Screen struct is giving me real problems but I want a type that reflects an immutable Bound and a mutable Console, so I'll figure it out.
