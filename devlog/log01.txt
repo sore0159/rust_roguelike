@@ -11,3 +11,9 @@ I am beginning to split the file structure apart and explore module scoping in R
 Worked out module namespacing issues.  All modules "use" implicitly starts at crate root, otherwise namespaces start at current module root.  Circular 'use' statements non-problematic.
   
 Messing around with lifetimes and types: the Screen struct is giving me real problems but I want a type that reflects an immutable Bound and a mutable Console, so I'll figure it out.
+
+2016/08/27
+
+Ironing out syntax errors: multiple bounds on a type are joined with '+', not ','.  Functions with trait-bound args limit traits in <>, not in arg annotations.
+
+Good progress splitting rendering/parsing/worldstate.  Starting to figure out map/creature layouts: main problem is having a thing which iterates through sub-things mutably, with each sub-thing viewing the thing as a whole.

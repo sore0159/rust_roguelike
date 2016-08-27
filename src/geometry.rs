@@ -16,12 +16,12 @@ impl Point {
             y: self.y + offset,
         }
     }
-    pub fn offset(&self, offset: Self) -> Self {
-        Point {
-            x: self.x + offset.x,
-            y: self.y + offset.y,
-        }
-    }
+    // pub fn offset(&self, offset: Self) -> Self {
+    // Point {
+    // x: self.x + offset.x,
+    // y: self.y + offset.y,
+    // }
+    // }
 }
 
 pub struct Bound {
@@ -52,9 +52,9 @@ impl Bound {
             },
         }
     }
-    pub fn from_points(p1: &Point, p2: &Point) -> Self {
-        Self::new(p1.x, p2.x, p1.y, p2.y)
-    }
+    // pub fn from_points(p1: &Point, p2: &Point) -> Self {
+    // Self::new(p1.x, p2.x, p1.y, p2.y)
+    // }
     pub fn contains(&self, point: &Point) -> bool {
         if point.x >= self.min.x && point.x <= self.max.x && point.y >= self.min.y &&
            point.y <= self.max.y {

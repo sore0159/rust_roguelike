@@ -2,22 +2,26 @@ use geometry::Point;
 use display::ThingRender;
 use game::commands::Direction;
 
-pub struct PC {
+pub struct Creature {
     pub location: Point,
+    pub display: char,
 }
 
-impl ThingRender for PC {
+impl ThingRender for Creature {
     fn get_location(&self) -> &Point {
         &self.location
     }
     fn get_display(&self) -> Option<char> {
-        Some('@')
+        Some(self.display)
     }
 }
 
-impl PC {
-    pub fn new(loc: Point) -> Self {
-        PC { location: loc }
+impl Creature {
+    pub fn new(display: char, loc: Point) -> Self {
+        Creature {
+            display: display,
+            location: loc,
+        }
     }
     pub fn move_dir(&mut self, d: Direction) {
         match d {
