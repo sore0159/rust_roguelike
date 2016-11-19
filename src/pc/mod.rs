@@ -19,8 +19,8 @@ impl PC {
     pub fn new(loc: Point) -> Self {
         PC { location: loc }
     }
-    pub fn move_dir(&mut self, d: Direction) {
-        match d {
+    pub fn move_dir(&mut self, d: &Direction) {
+        match *d {
             Direction::Up => self.location = self.location.offset_y(-1),
             Direction::Down => self.location = self.location.offset_y(1),
             Direction::Left => self.location = self.location.offset_x(-1),

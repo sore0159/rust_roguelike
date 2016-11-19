@@ -40,9 +40,22 @@ impl<T: Console> Screen<T> {
         let loc = thing.get_location();
         if self.bound.contains(loc) {
             self.console.put_char(loc.x, loc.y, c, BackgroundFlag::Set);
-            if self.bound.contains(loc) {
-                self.console.put_char(loc.x, loc.y, c, BackgroundFlag::Set);
-            }
+        }
+    }
+    pub fn render_box(&mut self, thing: Box<&ThingRender>) {
+        let c: char = match thing.get_display() {
+            None => return,
+            Some(x) => x,
+        };
+        let loc = thing.get_location();
+        if self.bound.contains(loc) {
+            self.console.put_char(loc.x, loc.y, c, BackgroundFlag::Set);
+        }
+
+    }
+    pub fn render_loc<'a, K: Iterator<Item = Box<&'a ThingRender>>>(&mut self, things: K) {
+        for t in things {
+            self.render_box(t);
         }
     }
 }
@@ -50,7 +63,9 @@ impl<T: Console> Screen<T> {
 impl Screen<Root> {
     pub fn render_game(&mut self, game: &Game) {
         self.console.clear();
-        self.render(&game.pc);
+        let s = game.get_scene();
+
+        self.render_loc(s.renderables(Some(&game.pc)).into_iter());
         self.console.flush();
     }
 }

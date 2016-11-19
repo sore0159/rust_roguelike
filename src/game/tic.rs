@@ -7,7 +7,8 @@ pub trait Tic {
 impl Game {
     pub fn tic(&mut self) {
         self.time += 1;
-        // self.pc.tic();
+        let s = &mut self.scenes[self.current_scene];
+        s.tic(self.time, &mut self.pc);
         println!("TIC {}", self.time);
     }
 }

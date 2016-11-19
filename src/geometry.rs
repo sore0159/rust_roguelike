@@ -1,3 +1,6 @@
+use game::commands::Direction;
+
+#[derive(Clone,Copy,PartialEq)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -16,12 +19,21 @@ impl Point {
             y: self.y + offset,
         }
     }
+    pub fn go(&self, dir: &Direction) -> Self {
+        match *dir {
+            Direction::Up => self.offset_y(-1),
+            Direction::Down => self.offset_y(1),
+            Direction::Left => self.offset_x(-1),
+            Direction::Right => self.offset_x(1),
+        }
+    }
     // pub fn offset(&self, offset: Self) -> Self {
     // Point {
     // x: self.x + offset.x,
     // y: self.y + offset.y,
     // }
     // }
+    //
 }
 
 pub struct Bound {
