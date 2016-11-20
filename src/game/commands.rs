@@ -1,16 +1,10 @@
 use tcod::input::{Key, KeyCode};
+use geometry::Direction;
 use super::Game;
 
 pub enum Action {
     Move(Direction),
     Quit,
-}
-
-pub enum Direction {
-    Up,
-    Down,
-    Left,
-    Right,
 }
 
 impl Game {

@@ -1,18 +1,18 @@
-use geometry::Point;
-use display::ThingRender;
-use game::commands::Direction;
+use display::{Pixi, Pix, Renderable};
+use geometry::{Direction, Point};
 
 pub struct Creature {
     pub location: Point,
     pub display: char,
 }
 
-impl ThingRender for Creature {
-    fn get_location(&self) -> &Point {
-        &self.location
-    }
-    fn get_display(&self) -> Option<char> {
-        Some(self.display)
+impl Renderable for Creature {
+    fn get_pix(&self) -> Pixi {
+        Pixi::One(Pix {
+            loc: self.location,
+            display: self.display,
+            z_lvl: 1,
+        })
     }
 }
 
@@ -24,11 +24,6 @@ impl Creature {
         }
     }
     pub fn move_dir(&mut self, d: Direction) {
-        match d {
-            Direction::Up => self.location = self.location.offset_y(-1),
-            Direction::Down => self.location = self.location.offset_y(1),
-            Direction::Left => self.location = self.location.offset_x(-1),
-            Direction::Right => self.location = self.location.offset_x(1),
-        };
+        self.location = self.location.go(d);
     }
 }

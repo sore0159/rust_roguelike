@@ -1,17 +1,17 @@
-use geometry::Point;
-use display::ThingRender;
-use game::commands::Direction;
+use geometry::{Direction, Point};
+use display::{Renderable, Pix, Pixi};
 
 pub struct PC {
     pub location: Point,
 }
 
-impl ThingRender for PC {
-    fn get_location(&self) -> &Point {
-        &self.location
-    }
-    fn get_display(&self) -> Option<char> {
-        Some('@')
+impl Renderable for PC {
+    fn get_pix(&self) -> Pixi {
+        Pixi::One(Pix {
+            loc: self.location,
+            display: '@',
+            z_lvl: 1,
+        })
     }
 }
 
@@ -19,12 +19,7 @@ impl PC {
     pub fn new(loc: Point) -> Self {
         PC { location: loc }
     }
-    pub fn move_dir(&mut self, d: &Direction) {
-        match *d {
-            Direction::Up => self.location = self.location.offset_y(-1),
-            Direction::Down => self.location = self.location.offset_y(1),
-            Direction::Left => self.location = self.location.offset_x(-1),
-            Direction::Right => self.location = self.location.offset_x(1),
-        };
+    pub fn move_dir(&mut self, d: Direction) {
+        self.location = self.location.go(d);
     }
 }

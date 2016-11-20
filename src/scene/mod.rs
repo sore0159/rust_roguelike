@@ -1,8 +1,7 @@
 use creature::Creature;
+use display::{Pixi, Renderable};
 use pc::PC;
-use display::ThingRender;
-use geometry::Point;
-use game::commands::Direction;
+use geometry::{Direction, Point};
 
 pub struct Scene {
     pub name: &'static str,
@@ -31,35 +30,39 @@ impl Scene {
         }
         return true;
     }
-    pub fn renderables<'a>(&'a self, pc: Option<&'a PC>) -> Vec<Box<&ThingRender>> {
-        let mut v: Vec<Box<&ThingRender>> = Vec::new();
-        if let Some(pc) = pc {
-            v.push(Box::new(pc));
-        }
-        for c in &self.creatures {
-            v.push(Box::new(c))
-        }
-        v
-    }
     pub fn tic(&mut self, time: u32, pc: &mut PC) {
         let pc_loc = pc.location;
         for c in &mut self.creatures {
             let mut target: Point = if c.location.x % 2 == 0 {
                 if c.location.y > 10 {
-                    c.location.go(&Direction::Up)
+                    c.location.go(Direction::Up)
                 } else {
-                    c.location.go(&Direction::Left)
+                    c.location.go(Direction::Left)
                 }
             } else {
                 if c.location.y < 30 {
-                    c.location.go(&Direction::Down)
+                    c.location.go(Direction::Down)
                 } else {
-                    c.location.go(&Direction::Right)
+                    c.location.go(Direction::Right)
                 }
             };
             if target != pc_loc {
                 c.location = target;
             }
         }
+    }
+}
+
+impl Renderable for Scene {
+    fn get_pix(&self) -> Pixi {
+        let mut v = Vec::with_capacity(self.creatures.len());
+        for c in &self.creatures {
+            match c.get_pix() {
+                Pixi::One(p) => v.push(p),
+                Pixi::Many(mut v2) => v.append(&mut v2),
+                Pixi::None => {}
+            };
+        }
+        Pixi::Many(v)
     }
 }

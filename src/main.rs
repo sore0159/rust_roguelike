@@ -8,7 +8,7 @@ mod scene;
 mod creature;
 
 fn main() {
-    let mut root_screen = display::init();
+    let mut root_screen = display::Screen::init();
     let mut game = game::Game::new();
 
     root_screen.render_game(&game);
